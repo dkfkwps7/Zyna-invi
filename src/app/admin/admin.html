@@ -1,0 +1,311 @@
+<style>
+  :host {
+    display: block;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f6f6f6, #fff9eb);
+    font-family: 'Fustat', sans-serif;
+  }
+
+  .admin-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .admin-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #846500;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .admin-subtitle {
+    font-size: 18px;
+    color: #8e6200;
+    margin-bottom: 20px;
+  }
+
+  .stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #ff8da4, #d05f76);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    text-align: center;
+    min-width: 150px;
+    box-shadow: 0 4px 15px rgba(255, 141, 164, 0.3);
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Fustat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+  }
+
+  .btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, #8e6200, #6b4a00);
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(142, 98, 0, 0.4);
+  }
+
+  .guests-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .guests-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .guests-table th {
+    background: linear-gradient(135deg, #8e6200, #6b4a00);
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .guests-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ffe88a;
+    font-size: 14px;
+  }
+
+  .guests-table tr:hover {
+    background-color: rgba(255, 232, 138, 0.1);
+  }
+
+  .attending-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .attending-yes {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+  }
+
+  .attending-no {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+  }
+
+  .delete-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .delete-btn:hover {
+    background: #d32f2f;
+    transform: scale(1.05);
+  }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #8e6200;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px;
+    color: #8e6200;
+  }
+
+  .empty-state h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .empty-state p {
+    font-size: 16px;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 768px) {
+    .admin-title {
+      font-size: 32px;
+    }
+
+    .stats-container {
+      gap: 15px;
+    }
+
+    .stat-card {
+      min-width: 120px;
+      padding: 15px 20px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+    }
+
+    .guests-table {
+      font-size: 12px;
+    }
+
+    .guests-table th,
+    .guests-table td {
+      padding: 10px;
+    }
+
+    .actions-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="admin-header">
+  <h1 class="admin-title">🎉 Admin Dashboard</h1>
+  <p class="admin-subtitle">Zyna's 1st Birthday & Dedication - Guest Management</p>
+
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-number">{{ guests.length }}</div>
+      <div class="stat-label">Total RSVPs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getAttendingCount() }}</div>
+      <div class="stat-label">Attending</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">{{ getDeclinedCount() }}</div>
+      <div class="stat-label">Declined</div>
+    </div>
+  </div>
+</div>
+
+<div class="actions-container">
+  <button class="btn btn-primary" (click)="exportToCSV()">📊 Export to Excel</button>
+  <button class="btn btn-danger" (click)="clearAllGuests()">🗑️ Clear All Guests</button>
+  <a href="/" class="btn btn-secondary"> 🏠 Back to Invitation </a>
+</div>
+
+<div class="guests-container">
+  <h2 style="color: #846500; margin-bottom: 20px">Guest List</h2>
+
+  <div *ngIf="isLoading" class="loading">Loading guest list...</div>
+
+  <div *ngIf="!isLoading && guests.length === 0" class="empty-state">
+    <h3>No RSVPs yet</h3>
+    <p>Guests haven't started responding to the invitation.</p>
+  </div>
+
+  <table *ngIf="!isLoading && guests.length > 0" class="guests-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let guest of guests; let i = index">
+        <td>{{ guest.name }}</td>
+        <td>
+          <span
+            class="attending-badge"
+            [class.attending-yes]="guest.attending === 'joyfully_accepts'"
+            [class.attending-no]="guest.attending === 'regretfully_declines'"
+          >
+            {{ guest.attending === 'joyfully_accepts' ? 'Attending' : 'Declined' }}
+          </span>
+        </td>
+        <td>{{ formatDate(guest.timestamp) }}</td>
+        <td>
+          <button class="delete-btn" (click)="deleteGuest(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
