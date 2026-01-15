@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin',
@@ -11,18 +12,24 @@ import { CommonModule } from '@angular/common';
 export class AdminComponent {
   guests: any[] = [];
   isLoading = false;
+  private apiUrl = '/api/rsvps';
+  private adminPassword = 'zyna2026'; // In production, use environment variables
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.loadGuests();
   }
 
-  loadGuests() {
+  private getAuthHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Authorization': `Bearer ${this.adminPassword}`
+    });
+  }
+
+  async loadGuests() {
     this.isLoading = true;
     try {
-      const storedGuests = JSON.parse(localStorage.getItem('rsvps') || '[]');
-      this.guests = storedGuests.sort((a: any, b: any) => 
-        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-      );
+      const response = await this.http.get<any[]>(this.apiUrl).toPromise();
+      this.guests = response || [];
     } catch (error) {
       console.error('Error loading guests:', error);
       this.guests = [];
@@ -54,17 +61,38 @@ export class AdminComponent {
     window.URL.revokeObjectURL(url);
   }
 
-  deleteGuest(index: number) {
+  async deleteGuest(guestId: string) {
     if (confirm('Are you sure you want to delete this RSVP?')) {
-      this.guests.splice(index, 1);
-      localStorage.setItem('rsvps', JSON.stringify(this.guests));
+      try {
+        await this.http.delete(`${this.apiUrl}?id=${guestId}`, {
+          headers: this.getAuthHeaders()
+        }).toPromise();
+        // Reload the guest list after deletion
+        await this.loadGuests();
+      } catch (error) {
+        console.error('Error deleting guest:', error);
+        alert('Error deleting RSVP. Please try again.');
+      }
     }
   }
 
-  clearAllGuests() {
+  async clearAllGuests() {
     if (confirm('Are you sure you want to delete all RSVPs? This action cannot be undone.')) {
-      this.guests = [];
-      localStorage.setItem('rsvps', JSON.stringify(this.guests));
+      try {
+        // Delete each guest one by one
+        const deletePromises = this.guests.map(guest => 
+          this.http.delete(`${this.apiUrl}?id=${guest.id}`, {
+            headers: this.getAuthHeaders()
+          }).toPromise()
+        );
+        await Promise.all(deletePromises);
+        
+        // Reload the guest list
+        await this.loadGuests();
+      } catch (error) {
+        console.error('Error clearing guests:', error);
+        alert('Error clearing RSVPs. Please try again.');
+      }
     }
   }
 

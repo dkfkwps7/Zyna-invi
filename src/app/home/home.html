@@ -574,6 +574,37 @@
     }
   }
 
+  /* Verse Section Styles */
+  .verse-container {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 30px;
+  }
+
+  .verse-text {
+    font-family: 'Fustat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #846500;
+    font-style: italic;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .verse-reference {
+    font-family: 'Fustat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #846500;
+    font-style: normal;
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    opacity: 0.8;
+  }
+
   /* Responsive Design for Mobile Screens */
   @media (max-width: 768px) {
     /* Reset for mobile to allow scrolling */
@@ -759,6 +790,36 @@
       font-size: 14px;
       padding: 12px 16px;
     }
+
+    .verse-container {
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 20px;
+    }
+
+    .verse-text {
+      font-family: 'Fustat', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      color: #846500;
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .verse-reference {
+      font-family: 'Fustat', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      color: #846500;
+      font-style: normal;
+      position: absolute;
+      bottom: -18px;
+      right: 0;
+      opacity: 0.8;
+    }
   }
 
   @media (max-width: 480px) {
@@ -892,6 +953,36 @@
       padding: 10px 14px;
       font-size: 13px;
     }
+
+    .verse-container {
+      text-align: center;
+      padding: 20px 15px;
+      margin-top: 10px;
+    }
+
+    .verse-text {
+      font-family: 'Fustat', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      color: #846500;
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 90%;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .verse-reference {
+      font-family: 'Fustat', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      color: #846500;
+      font-style: normal;
+      position: absolute;
+      bottom: -16px;
+      right: 0;
+      opacity: 0.8;
+    }
   }
 </style>
 
@@ -994,4 +1085,12 @@
   [class.error]="!submitSuccess"
 >
   {{ submitMessage }}
+</div>
+
+<!-- Verse Section -->
+<div class="verse-container">
+  <div class="verse-text">
+    "For this Child we have prayed and the Lord has granted the desires of our heart"
+    <div class="verse-reference">1 Samuel 1:27</div>
+  </div>
 </div>

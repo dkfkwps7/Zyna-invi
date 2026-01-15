@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -14,21 +15,19 @@ export class HomeComponent {
   
   submitMessage: string = '';
   submitSuccess: boolean = false;
+  private apiUrl = '/api/rsvps';
+
+  constructor(private http: HttpClient) {}
 
   async submitRSVP(form: any) {
     try {
       const formData = {
         name: form.value.name,
-        attending: form.value.attending,
-        timestamp: new Date().toISOString()
+        attending: form.value.attending
       };
 
-      // For now, we'll store in localStorage as a demo
-      // In a real application, you'd connect this to a backend service
-      // that writes to Google Sheets, Excel, or a database
-      let existingRSVPs = JSON.parse(localStorage.getItem('rsvps') || '[]');
-      existingRSVPs.push(formData);
-      localStorage.setItem('rsvps', JSON.stringify(existingRSVPs));
+      // Send RSVP to serverless API
+      await this.http.post(this.apiUrl, formData).toPromise();
 
       this.submitMessage = 'Thank you for your RSVP!';
       this.submitSuccess = true;
